@@ -1,6 +1,39 @@
 import { Link } from '@inertiajs/react';
 
-export default function GuestLayout({ children }) {
+export default function GuestLayout({ children, backgroundImage = null }) {
+    if (backgroundImage) {
+        // The artwork (3:2) has a white circle in its centre. On large landscape screens it is
+        // scaled to cover the viewport, kept centred, and the form is placed inside the circle.
+        // Elsewhere it is a backdrop behind the card.
+        return (
+            <div className="light relative min-h-screen overflow-hidden bg-[#a6a2ff]">
+                <div
+                    className="flex min-h-screen items-center justify-center bg-cover bg-center px-4 py-10 art:absolute art:left-1/2 art:top-1/2 art:block art:h-[max(100vh,66.667vw)] art:min-h-0 art:w-[max(100vw,150vh)] art:-translate-x-1/2 art:-translate-y-1/2 art:bg-[length:100%_100%] art:p-0"
+                    style={{ backgroundImage: `url(${backgroundImage})` }}
+                >
+                    {/* Square inscribed in the artwork's circle: x 29.6–69.6%, y 20.5–80.5% */}
+                    <div className="w-full max-w-sm art:absolute art:left-[29.6%] art:top-[20.5%] art:flex art:h-[60%] art:w-[40%] art:max-w-none art:items-center art:justify-center">
+                        <div className="w-full max-w-sm rounded-3xl bg-white/95 p-6 shadow-xl sm:p-8">
+                            <Link href="/" className="mb-6 block text-center text-2xl font-semibold text-gray-800">
+                                {import.meta.env.VITE_APP_NAME || 'Admin'}
+                            </Link>
+
+                            {children}
+
+                            <footer className="mt-6 border-t border-gray-200 pt-4 text-center text-xs leading-relaxed text-gray-500">
+                                <p className="font-medium text-gray-600">Buying House Management Software</p>
+                                <p>
+                                    Version 1.0.0 · © 2026 · Made with{' '}
+                                    <span className="text-rose-500" role="img" aria-label="love">♥</span>
+                                </p>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="relative flex min-h-screen flex-col items-center overflow-hidden bg-gray-100 pt-6 sm:justify-center sm:pt-0 dark:bg-gray-900">
             {/* Woven fabric texture, tiled across the whole page */}
