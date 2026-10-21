@@ -22,7 +22,7 @@ class WorkOrderController extends Controller
         $workOrders = WorkOrder::query()
             ->with('order')
             ->when($request->string('search')->toString(), function ($query, $search) {
-                $query->where('work_order_no', 'like', "%{$search}%");
+                $query->whereLike('work_order_no', "%{$search}%");
             })
             ->latest('date')
             ->paginate(15)

@@ -22,7 +22,7 @@ class OrderController extends Controller
         $orders = Order::query()
             ->with(['buyer', 'party'])
             ->when($request->string('search')->toString(), function ($query, $search) {
-                $query->where('order_no', 'like', "%{$search}%");
+                $query->whereLike('order_no', "%{$search}%");
             })
             ->latest('date')
             ->paginate(15)

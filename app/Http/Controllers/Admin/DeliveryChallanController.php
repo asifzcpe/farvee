@@ -23,7 +23,7 @@ class DeliveryChallanController extends Controller
         $challans = DeliveryChallan::query()
             ->with(['order', 'party'])
             ->when($request->string('search')->toString(), function ($query, $search) {
-                $query->where('challan_no', 'like', "%{$search}%");
+                $query->whereLike('challan_no', "%{$search}%");
             })
             ->latest('date')
             ->paginate(15)

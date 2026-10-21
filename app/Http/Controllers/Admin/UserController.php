@@ -18,8 +18,8 @@ class UserController extends Controller
         $users = User::query()
             ->when($request->string('search')->toString(), function ($query, $search) {
                 $query->where(function ($query) use ($search) {
-                    $query->where('name', 'like', "%{$search}%")
-                        ->orWhere('email', 'like', "%{$search}%");
+                    $query->whereLike('name', "%{$search}%")
+                        ->orWhereLike('email', "%{$search}%");
                 });
             })
             ->latest()

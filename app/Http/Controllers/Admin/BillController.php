@@ -25,7 +25,7 @@ class BillController extends Controller
         $bills = Bill::query()
             ->with(['order', 'party'])
             ->when($request->string('search')->toString(), function ($query, $search) {
-                $query->where('bill_ref_no', 'like', "%{$search}%");
+                $query->whereLike('bill_ref_no', "%{$search}%");
             })
             ->latest('date')
             ->paginate(15)
